@@ -21,6 +21,8 @@
    - [9. Hasmik](#9-hasmik)
    - [10. praktika(inga, maria)](#10-praktikainga-maria)
    - [11. Tereza_Arman](#11-tereza_arman)
+   - [12. avto-salon_Narek_HaykZaqaryan](#12-avto-salon_narek_haykzaqaryan)
+   - [13. stylehub_Hayk](#13-stylehub_hayk)
 5. [Գործարկման Ընդհանուր Ուղեցույց (Quick Start Guide)](#-գործարկման-ընդհանուր-ուղեցույց-quick-start-guide)
 
 ---
@@ -40,6 +42,8 @@
 | [Hasmik](Hasmik/) | Hasmik | **LunaWear** (Fashion Apparel Platform) | Python, Flask, MySQL, Jinja2, CSS3 | [pyt.py](Hasmik/pyt.py) | [Untitled-3.sql](Hasmik/Untitled-3.sql) |
 | [praktika(inga, maria)](<praktika(inga, maria)/>) | Inga, Maria | **PerfumeShop** (Web API & Fragrance Catalog) | C#, .NET 10 (ASP.NET Minimal API), MySQL | [Program.cs](<praktika(inga, maria)/PerfumeShop/Program.cs>) | [sql.txt](<praktika(inga, maria)/sql.txt>) |
 | [Tereza_Arman](Tereza_Arman/) | Tereza, Arman | **Style House** (Boutique & SQLite Terminal) | HTML5, CSS3, JavaScript, SQLite (sql.js WASM) | [index.html](Tereza_Arman/index.html) | Embedded SQLite (`products`) |
+| [avto-salon_Narek_HaykZaqaryan](avto-salon_Narek_HaykZaqaryan/) | Narek, Hayk Zaqaryan | **DRIVE** (Car Dealership & Inventory Management) | PHP (Native / PDO), MySQL, JavaScript, HTML5, CSS3 | [index.php](avto-salon_Narek_HaykZaqaryan/index.php) & [api.php](avto-salon_Narek_HaykZaqaryan/api.php) | [database.sql](avto-salon_Narek_HaykZaqaryan/database.sql) |
+| [stylehub_Hayk](stylehub_Hayk/) | Hayk | **STYLEHUB** (Fashion Shop & Catalog Management) | PHP (Native / PDO), MySQL, JavaScript, HTML5, CSS3 | [index.php](stylehub_Hayk/index.php) & [api.php](stylehub_Hayk/api.php) | [database.sql](stylehub_Hayk/database.sql) |
 
 ---
 
@@ -58,6 +62,8 @@
 | **Hasmik** | HTML5, Jinja2, CSS3 | Python, Flask | MySQL | Հագուստի կատալոգ, Ավտորիզացիա, Զամբյուղի համակարգ |
 | **praktika(inga, maria)** | HTML5, CSS3, JS | C#, .NET 10 Minimal API | MySQL (`perfumery_db`) | Օծանելիքների կատալոգ, Ֆիլտրացիա ըստ բրենդի/կատեգորիայի |
 | **Tereza_Arman** | HTML5, CSS3, JS | Բրաուզերային WASM | SQLite (`sql.js`) | Style House հագուստի խանութ, Ինտեգրված SQL կոնսոլ |
+| **avto-salon_Narek_HaykZaqaryan** | HTML5, CSS3, JS | PHP (Native / PDO) | MySQL (`avto_salon`) | Ավտոսրահի մեքենաների կատալոգ, կարգավիճակներ, ավելացում և ջնջում |
+| **stylehub_Hayk** | HTML5, CSS3, JS | PHP (Native / PDO) | MySQL (`stylehub`) | Հագուստի խանութ, որոնում, բազմաչափ ֆիլտրում (չափս, գույն, սեռ, գին) |
 
 ---
 
@@ -72,6 +78,8 @@
 | [travel.sql](DreamTrip_Flora/travel.sql) | `dreamtrip` | `users`, `destinations`, `bookings` | Ճանապարհորդական փաթեթներ, գներ, օրերի քանակ, ամրագրումներ |
 | [Untitled-3.sql](Hasmik/Untitled-3.sql) | `lunawear` / custom | `users`, `products`, `orders` | Հագուստի մոդելներ, նկարագրություններ, գներ |
 | [sql.txt](<praktika(inga, maria)/sql.txt>) | `perfumery_db` | `categories`, `perfumes` | Օծանելիքների բրենդներ (Floral, Woody, Fresh, Oriental), գներ |
+| [database.sql](avto-salon_Narek_HaykZaqaryan/database.sql) | `avto_salon` | `cars` | Մեքենաների մակնիշներ, մոդելներ, տարեթվեր, գներ, վազք, վառելիք, կարգավիճակ |
+| [database.sql](stylehub_Hayk/database.sql) | `stylehub` | `products` | Հագուստի տեսականի, գներ, պահեստային քանակներ, չափսեր, գույներ |
 
 ---
 
@@ -417,6 +425,64 @@ dotnet run
 
 ---
 
+### 12. [avto-salon_Narek_HaykZaqaryan](avto-salon_Narek_HaykZaqaryan/)
+
+**Հեղինակներ:** Narek, Hayk Zaqaryan  
+**Նախագծի Անվանում:** DRIVE — Ավտոսրահի Համակարգ (Car Dealership & Inventory Management)  
+**Տեխնոլոգիաներ:** PHP (Native / PDO), MySQL, JavaScript, HTML5, CSS3  
+**Նկարագրություն:** Ավտոսրահի մեքենաների կառավարման և վաճառքի համակարգ։ Ներառում է մեքենաների կատալոգ (BMW, Mercedes, Toyota, Tesla և այլն), կարգավիճակների վերահսկում («Առկա է», «Ամրագրված է», «Վաճառված է»), նոր մեքենա ավելացնելու ինտերֆեյս և մեքենայի հեռացում REST API-ի միջոցով։
+
+#### Ֆայլերի Կառուցվածք (Files Table):
+| Ֆայլի Հղում (File Link) | Տեսակ (Type) | Գործառույթ և Նկարագրություն (Description) |
+| :--- | :--- | :--- |
+| [index.php](avto-salon_Narek_HaykZaqaryan/index.php) | Frontend & Client | Ավտոսրահի ինտերֆեյս, քարտերի ցուցադրություն, մոդալներ և JavaScript fetch կանչեր |
+| [api.php](avto-salon_Narek_HaykZaqaryan/api.php) | Backend REST API | Տվյալների ստացում (`list`), ավելացում (`add`), ջնջում (`delete`) |
+| [db.php](avto-salon_Narek_HaykZaqaryan/db.php) | DB Connection | PDO կապ MySQL բազայի հետ (`avto_salon`) |
+| [database.sql](avto-salon_Narek_HaykZaqaryan/database.sql) | Տվյալների Բազա | `cars` աղյուսակի ստեղծում և սկզբնական մեքենաների ներմուծում |
+| [README.txt](avto-salon_Narek_HaykZaqaryan/README.txt) | Փաստաթուղթ | Գործարկման ուղեցույց (XAMPP / PHP) |
+
+#### Գործարկում (Run Commands):
+```bash
+# 1. Բազայի ստեղծում
+mysql -u root -p < "avto-salon_Narek_HaykZaqaryan/database.sql"
+
+# 2. Գործարկում ներկառուցված PHP սերվերով
+cd avto-salon_Narek_HaykZaqaryan
+php -S localhost:8000
+# Ապա բացել http://localhost:8000/index.php
+```
+
+---
+
+### 13. [stylehub_Hayk](stylehub_Hayk/)
+
+**Հեղինակ:** Hayk  
+**Նախագծի Անվանում:** STYLEHUB — Հագուստի Խանութ և Կառավարման Համակարգ (Fashion Shop & Catalog Management)  
+**Տեխնոլոգիաներ:** PHP (Native / PDO), MySQL, JavaScript, HTML5, CSS3  
+**Նկարագրություն:** Հագուստի օնլայն խանութ և պահեստի կառավարում։ Հնարավորություն է տալիս որոնել ըստ անվանման/նկարագրության, ֆիլտրել ըստ կատեգորիաների (Հուդի, Շապիկ, Բաճկոն, Զգեստ, Տաբատ), չափսի (S, M, L), սեռի, գնային սահմանաչափի, առկայության (Available, Limited, Out of Stock) և տեսակավորել ըստ գնի։ Աջակցում է նոր ապրանքների ավելացում և հեռացում։
+
+#### Ֆայլերի Կառուցվածք (Files Table):
+| Ֆայլի Հղում (File Link) | Տեսակ (Type) | Գործառույթ և Նկարագրություն (Description) |
+| :--- | :--- | :--- |
+| [index.php](stylehub_Hayk/index.php) | Frontend & Client | Խանութի վիտրինա, ֆիլտրման վահանակ, ապրանքների ավելացման ձևաթուղթ և JS հարցումներ |
+| [api.php](stylehub_Hayk/api.php) | Backend REST API | Դինամիկ SQL որոնում, ֆիլտրեր, տեսակավորում, ավելացում և ջնջում |
+| [config.php](stylehub_Hayk/config.php) | DB Connection | PDO կապ MySQL բազայի հետ (`stylehub`) |
+| [database.sql](stylehub_Hayk/database.sql) | Տվյալների Բազա | `products` աղյուսակ՝ ինդեքսներով և նախնական տեսականիով |
+| [README.txt](stylehub_Hayk/README.txt) | Փաստաթուղթ | Գործարկման ուղեցույց (XAMPP / PHP) |
+
+#### Գործարկում (Run Commands):
+```bash
+# 1. Բազայի ստեղծում
+mysql -u root -p < "stylehub_Hayk/database.sql"
+
+# 2. Գործարկում ներկառուցված PHP սերվերով
+cd stylehub_Hayk
+php -S localhost:8000
+# Ապա բացել http://localhost:8000/index.php
+```
+
+---
+
 ## 🚀 Գործարկման Ընդհանուր Ուղեցույց (Quick Start Guide)
 
 Այս ռեպոզիտորիայի նախագծերը բաժանվում են 5 հիմնական տեխնոլոգիական խմբի․
@@ -451,10 +517,12 @@ dotnet run
 
 ### 4. 🐘 PHP Նախագծեր
 - [atelier_shop_David](atelier_shop_David/)
+- [avto-salon_Narek_HaykZaqaryan](avto-salon_Narek_HaykZaqaryan/)
+- [stylehub_Hayk](stylehub_Hayk/)
 
 **Ինչպես աշխատեցնել:**
-1. Բազան ներմուծել MySQL-ում (`schema.sql`)։
-2. Գործարկել ներկառուցված PHP սերվեր՝ `php -S localhost:8000` atelier պանակում։
+1. Բազան ներմուծել MySQL-ում (օրինակ՝ `schema.sql` կամ `database.sql` համապատասխան պանակից)։
+2. Գործարկել XAMPP-ի Apache/MySQL կամ ներկառուցված PHP սերվերը տվյալ պանակում՝ `php -S localhost:8000`։
 
 ### 5. 🌐 Բրաուզերային SQLite (WASM) Նախագծեր
 - [Asatur_Karlen](Asatur_Karlen/)
