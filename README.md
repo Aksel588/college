@@ -23,6 +23,7 @@
    - [11. Tereza_Arman](#11-tereza_arman)
    - [12. avto-salon_Narek_HaykZaqaryan](#12-avto-salon_narek_haykzaqaryan)
    - [13. stylehub_Hayk](#13-stylehub_hayk)
+   - [14. watch-market_Gurgen](#14-watch-market_gurgen)
 5. [Գործարկման Ընդհանուր Ուղեցույց (Quick Start Guide)](#-գործարկման-ընդհանուր-ուղեցույց-quick-start-guide)
 
 ---
@@ -44,6 +45,7 @@
 | [Tereza_Arman](Tereza_Arman/) | Tereza, Arman | **Style House** (Boutique & SQLite Terminal) | HTML5, CSS3, JavaScript, SQLite (sql.js WASM) | [index.html](Tereza_Arman/index.html) | Embedded SQLite (`products`) |
 | [avto-salon_Narek_HaykZaqaryan](avto-salon_Narek_HaykZaqaryan/) | Narek, Hayk Zaqaryan | **DRIVE** (Car Dealership & Inventory Management) | PHP (Native / PDO), MySQL, JavaScript, HTML5, CSS3 | [index.php](avto-salon_Narek_HaykZaqaryan/index.php) & [api.php](avto-salon_Narek_HaykZaqaryan/api.php) | [database.sql](avto-salon_Narek_HaykZaqaryan/database.sql) |
 | [stylehub_Hayk](stylehub_Hayk/) | Hayk | **STYLEHUB** (Fashion Shop & Catalog Management) | PHP (Native / PDO), MySQL, JavaScript, HTML5, CSS3 | [index.php](stylehub_Hayk/index.php) & [api.php](stylehub_Hayk/api.php) | [database.sql](stylehub_Hayk/database.sql) |
+| [watch-market_Gurgen](watch-market_Gurgen/) | Gurgen | **ԺԱՄԱՊԱՀ** (Watch Market & Trading Platform) | PHP (Native / PDO), MySQL, HTML5, CSS3 | [index.php](watch-market_Gurgen/index.php) | [database.sql](watch-market_Gurgen/database.sql) |
 
 ---
 
@@ -64,6 +66,7 @@
 | **Tereza_Arman** | HTML5, CSS3, JS | Բրաուզերային WASM | SQLite (`sql.js`) | Style House հագուստի խանութ, Ինտեգրված SQL կոնսոլ |
 | **avto-salon_Narek_HaykZaqaryan** | HTML5, CSS3, JS | PHP (Native / PDO) | MySQL (`avto_salon`) | Ավտոսրահի մեքենաների կատալոգ, կարգավիճակներ, ավելացում և ջնջում |
 | **stylehub_Hayk** | HTML5, CSS3, JS | PHP (Native / PDO) | MySQL (`stylehub`) | Հագուստի խանութ, որոնում, բազմաչափ ֆիլտրում (չափս, գույն, սեռ, գին) |
+| **watch-market_Gurgen** | HTML5, CSS3 | PHP (Native / PDO) | MySQL (`watch_market`) | Ժամացույցների կատալոգ, բազմաչափ ֆիլտրում (բրենդ, տեսակ, սեռ, գին), գնման և վաճառքի հայտերի գրանցում |
 
 ---
 
@@ -80,6 +83,7 @@
 | [sql.txt](<praktika(inga, maria)/sql.txt>) | `perfumery_db` | `categories`, `perfumes` | Օծանելիքների բրենդներ (Floral, Woody, Fresh, Oriental), գներ |
 | [database.sql](avto-salon_Narek_HaykZaqaryan/database.sql) | `avto_salon` | `cars` | Մեքենաների մակնիշներ, մոդելներ, տարեթվեր, գներ, վազք, վառելիք, կարգավիճակ |
 | [database.sql](stylehub_Hayk/database.sql) | `stylehub` | `products` | Հագուստի տեսականի, գներ, պահեստային քանակներ, չափսեր, գույներ |
+| [database.sql](watch-market_Gurgen/database.sql) | `watch_market` | `products`, `buy_requests`, `sell_requests` | Ժամացույցների մոդելներ, գներ, տեսակներ, գնման հայտեր, վաճառքի առաջարկներ |
 
 ---
 
@@ -483,6 +487,37 @@ php -S localhost:8000
 
 ---
 
+### 14. [watch-market_Gurgen](watch-market_Gurgen/)
+
+**Հեղինակ:** Gurgen  
+**Նախագծի Անվանում:** ԺԱՄԱՊԱՀ — Ժամացույցների Առք ու Վաճառք (Watch Market & Trading Platform)  
+**Տեխնոլոգիաներ:** PHP (Native / PDO), MySQL, HTML5, CSS3  
+**Նկարագրություն:** Դասական, մեխանիկական և խելացի ժամացույցների առք ու վաճառքի հարթակ։ Ներառում է ժամացույցների կատալոգ, որոնում և բազմաչափ ֆիլտրում (ըստ բրենդի, տեսակի՝ Մեխանիկական/Քվարցային/Խելացի, սեռի/ոճի, գնային սահմանաչափի), գների դասավորում, գնման օնլայն հայտի գրանցում (`buy.php`) և սեփական ժամացույցը վաճառելու հայտի ընդունում (`sell.php`)։ Բոլոր հայտերը պահպանվում են MySQL տվյալների բազայում։
+
+#### Ֆայլերի Կառուցվածք (Files Table):
+| Ֆայլի Հղում (File Link) | Տեսակ (Type) | Գործառույթ և Նկարագրություն (Description) |
+| :--- | :--- | :--- |
+| [index.php](watch-market_Gurgen/index.php) | Frontend & Client | Գլխավոր էջ, հերո բաժին, ժամացույցների կատալոգ, որոնում և ֆիլտրեր |
+| [buy.php](watch-market_Gurgen/buy.php) | Order Request | Կոնկրետ ժամացույցի գնման հայտի լրացման և գրանցման էջ |
+| [sell.php](watch-market_Gurgen/sell.php) | Sell Request | Օգտատիրոջ կողմից ժամացույց վաճառելու հայտի ներկայացման էջ |
+| [config.php](watch-market_Gurgen/config.php) | DB Connection | PDO կապ MySQL բազայի հետ (`watch_market`) |
+| [database.sql](watch-market_Gurgen/database.sql) | Տվյալների Բազա | `products`, `buy_requests`, `sell_requests` աղյուսակներ և սկզբնական տվյալներ |
+| [README.txt](watch-market_Gurgen/README.txt) | Փաստաթուղթ | Տեղադրման և գործարկման ուղեցույց (XAMPP / MySQL) |
+| [assets/style.css](watch-market_Gurgen/assets/style.css) | Stylesheet | Կայքի մոդեռն դիզայն և հարմարեցված ոճեր |
+
+#### Գործարկում (Run Commands):
+```bash
+# 1. Բազայի ստեղծում
+mysql -u root -p < "watch-market_Gurgen/database.sql"
+
+# 2. Գործարկում ներկառուցված PHP սերվերով
+cd watch-market_Gurgen
+php -S localhost:8000
+# Ապա բացել http://localhost:8000/index.php
+```
+
+---
+
 ## 🚀 Գործարկման Ընդհանուր Ուղեցույց (Quick Start Guide)
 
 Այս ռեպոզիտորիայի նախագծերը բաժանվում են 5 հիմնական տեխնոլոգիական խմբի․
@@ -519,6 +554,7 @@ php -S localhost:8000
 - [atelier_shop_David](atelier_shop_David/)
 - [avto-salon_Narek_HaykZaqaryan](avto-salon_Narek_HaykZaqaryan/)
 - [stylehub_Hayk](stylehub_Hayk/)
+- [watch-market_Gurgen](watch-market_Gurgen/)
 
 **Ինչպես աշխատեցնել:**
 1. Բազան ներմուծել MySQL-ում (օրինակ՝ `schema.sql` կամ `database.sql` համապատասխան պանակից)։
