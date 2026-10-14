@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login | BookNest</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <main class="register-page">
+        <div class="register-card">
+            <a class="brand" href="{{ url_for('login') }}">
+                <span class="brand-icon">b.</span>
+                <span>BookNest</span>
+            </a>
+
+            <h1>Welcome back</h1>
+            <p class="register-subtitle">
+                Your next chapter is waiting for you.
+            </p>
+
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    <section class="messages">
+                        {% for category, message in messages %}
+                            <div class="message {{ category }}">{{ message }}</div>
+                        {% endfor %}
+                    </section>
+                {% endif %}
+            {% endwith %}
+
+            <form class="register-form" action="{{ url_for('login') }}" method="POST">
+                <div>
+                    <label for="username">Username</label>
+                    <input id="username" name="username" type="text"
+                           maxlength="50" autocomplete="username" required>
+                </div>
+
+                <div>
+                    <label for="password">Password</label>
+                    <input id="password" name="password" type="password"
+                           autocomplete="current-password" required>
+                </div>
+
+                <button type="submit">Log in</button>
+            </form>
+
+            <p class="register-back">
+                Don't have an account?
+                <a href="{{ url_for('register') }}">Create one</a>
+            </p>
+        </div>
+    </main>
+</body>
+</html>

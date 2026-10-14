@@ -1,0 +1,70 @@
+{% extends "base.html" %}
+{% block title %}DreamTrip | A world worth discovering{% endblock %}
+{% block content %}
+<main>
+    <section class="hero">
+        <div class="hero-image"></div>
+        <div class="hero-shade"></div>
+        <div class="hero-content container">
+            <p class="eyebrow eyebrow-light"><span></span> TRAVEL, REIMAGINED</p>
+            <h1>The world is<br><em>waiting for you.</em></h1>
+            <p class="hero-copy">Extraordinary places. Meaningful moments.<br>Your next chapter starts here.</p>
+            <div class="hero-actions">
+                <a class="button button-gold" href="{{ url_for('destinations') }}">Explore destinations <span>↗</span></a>
+                <a class="text-link text-link-light" href="#our-story">Discover our philosophy ↓</a>
+            </div>
+            <div class="hero-note"><span class="note-line"></span><span>CURATED WITH CARE, MADE FOR YOU</span></div>
+        </div>
+        <div class="hero-index"><span>01</span> / 04</div>
+    </section>
+
+    <section class="intro section container" id="our-story">
+        <div class="intro-label"><span class="eyebrow">THE ART OF GETTING AWAY</span><span class="gold-rule"></span></div>
+        <div class="intro-copy">
+            <h2>Not just a destination.<br><em>A feeling you'll keep.</em></h2>
+            <p>We believe the best journeys are the ones that stay with you. From sunlit coastlines to quiet mountain hideaways, discover places that invite you to slow down and see the world differently.</p>
+            <a class="text-link" href="{{ url_for('destinations') }}">Our destinations <span>↗</span></a>
+        </div>
+        <div class="intro-stamp"><span>THE</span><strong>D</strong><span>DIFFERENCE<br>IS IN THE DETAILS</span></div>
+    </section>
+
+    <section class="featured-section section">
+        <div class="container">
+            <div class="section-heading">
+                <div><p class="eyebrow">YOUR NEXT CHAPTER</p><h2>Places to <em>fall for.</em></h2></div>
+                <a class="text-link" href="{{ url_for('destinations') }}">View all destinations <span>↗</span></a>
+            </div>
+            <div class="destination-grid">
+                {% for destination in destinations %}
+                <article class="destination-card">
+                    <a class="destination-image" href="{{ url_for('destination_detail', destination_id=destination.destination_id) }}">
+                        <img src="{{ destination.image_url }}" alt="{{ destination.name }}" loading="lazy">
+                        <span class="image-arrow">↗</span>
+                    </a>
+                    <div class="destination-meta"><span>{{ destination.country }}</span><span>FROM ${{ "{:,.0f}".format(destination.price) }}</span></div>
+                    <h3><a href="{{ url_for('destination_detail', destination_id=destination.destination_id) }}">{{ destination.name }}</a></h3>
+                    <p>{{ destination.description }}</p>
+                </article>
+                {% else %}
+                <p>No destinations yet. Add some to your database to get started.</p>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+
+    <section class="quote-section">
+        <div class="quote-image"></div>
+        <div class="quote-content">
+            <p class="eyebrow eyebrow-light">A DIFFERENT WAY TO SEE THE WORLD</p>
+            <blockquote>“Collect moments.<br><em>Not just miles.</em>”</blockquote>
+            <span class="quote-line"></span>
+            <p>Make room for wonder.</p>
+        </div>
+    </section>
+
+    <section class="closing-cta section container">
+        <div><p class="eyebrow">SOMETHING WONDERFUL AWAITS</p><h2>Where will life <em>take you?</em></h2></div>
+        <a class="button button-dark" href="{{ url_for('destinations') }}">Find your escape <span>↗</span></a>
+    </section>
+</main>
+{% endblock %}

@@ -1,0 +1,257 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BookNest</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+
+<header class="navbar">
+    <a class="brand" href="{{ url_for('home') }}">
+        <span class="brand-icon">b.</span>
+        <span>the book archive</span>
+    </a>
+
+    <div class="nav-actions">
+        <span class="welcome-user">Hi, {{ username }} ♡</span>
+        <a class="nav-link" href="#add-book">Add a book +</a>
+        <a class="nav-link" href="{{ url_for('logout') }}">Log out ↗</a>
+    </div>
+</header>
+
+<main class="container">
+
+    <section class="hero">
+        <span class="eyebrow">YOUR PERSONAL LIBRARY</span>
+        <h1>Stories worth<br><span>keeping.</span></h1>
+        <p>
+            A little space for the books you love, the ones
+            you're reading, and the ones waiting for you.
+        </p>
+        <a class="primary-button" href="#my-books">Explore my collection ↓</a>
+    </section>
+
+    <section class="stats">
+        <div class="stat-card">
+            <span class="stat-number">{{ books|length }}</span>
+            <span class="stat-label">
+                {{ "Matching books" if search else "Books in view" }}
+            </span>
+        </div>
+        <div class="stat-card">
+            <span class="stat-number">✿</span>
+            <span class="stat-label">A world of stories</span>
+        </div>
+        <div class="stat-card">
+            <span class="stat-number">♡</span>
+            <span class="stat-label">Made for readers</span>
+        </div>
+    </section>
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            <section class="messages">
+                {% for category, message in messages %}
+                    <div class="message {{ category }}">{{ message }}</div>
+                {% endfor %}
+            </section>
+        {% endif %}
+    {% endwith %}
+
+    <section class="library-section" id="my-books">
+        <div class="section-heading">
+            <div>
+                <span class="eyebrow">THE COLLECTION</span>
+                <h2>Your bookshelf</h2>
+            </div>
+            <span class="book-count">{{ books|length }} books</span>
+        </div>
+
+        <form class="search-form" action="{{ url_for('home') }}" method="GET">
+            <span class="search-icon">⌕</span>
+            <input
+                type="search"
+                name="q"
+                value="{{ search }}"
+                placeholder="Search by title or author..."
+                aria-label="Search books by title or author"
+            >
+            <button type="submit" class="search-button">Search</button>
+            {% if search %}
+                <a class="clear-link" href="{{ url_for('home') }}">Clear</a>
+            {% endif %}
+        </form>
+
+        {% if books %}
+            <div class="book-grid">
+                {% for book in books %}
+                    <article class="book-card">
+
+                       <div class="book-cover">
+    <img
+        class="book-cover-image"
+        src="https://covers.openlibrary.org/b/title/{{ book.title | urlencode }}-M.jpg"
+        alt="Cover of {{ book.title }}"
+        loading="lazy"
+    >
+</div>
+
+                        <div class="book-details">
+                            <h3>{{ book.title }}</h3>
+                            <p class="author">by {{ book.author }}</p>
+
+                            <div class="book-meta">
+                                <span class="genre-tag">
+                                    {{ book.genre or "Uncategorized" }}
+                                </span>
+                            </div>
+
+                            {% if book.in_list %}
+
+                                <form
+                                    class="status-form"
+                                    action="{{ url_for('update_book', book_id=book.id) }}"
+                                    method="POST"
+                                >
+                                    <label for="status-{{ book.id }}">
+                                        Reading status
+                                    </label>
+                                    <select
+                                        id="status-{{ book.id }}"
+                                        name="reading_status"
+                                        onchange="this.form.submit()"
+                                    >
+                                        {% for status in statuses %}
+                                            <option
+                                                value="{{ status }}"
+                                                {% if book.reading_status == status %}selected{% endif %}
+                                            >
+                                                {{ status }}
+                                            </option>
+                                        {% endfor %}
+                                    </select>
+                                </form>
+
+                                <form
+                                    action="{{ url_for('delete_book', book_id=book.id) }}"
+                                    method="POST"
+                                    onsubmit="return confirm('Remove this book from your reading list?');"
+                                >
+                                    <button type="submit" class="delete-button">
+                                        Remove from my list
+                                    </button>
+                                </form>
+
+                            {% else %}
+
+                                <form
+                                    action="{{ url_for('add_to_list', book_id=book.id) }}"
+                                    method="POST"
+                                >
+                                    <button type="submit" class="primary-button submit-button">
+                                        Add to my reading list +
+                                    </button>
+                                </form>
+
+                            {% endif %}
+                        </div>
+
+                    </article>
+                {% endfor %}
+            </div>
+
+        {% else %}
+
+            <div class="empty-state">
+                <span class="empty-icon">♡</span>
+                <h3>{{ "No books found" if search else "Your story starts here." }}</h3>
+                <p>
+                    {{ "Try another title or author." if search
+                       else "Add your first book and start building your collection." }}
+                </p>
+                {% if not search %}
+                    <a href="#add-book" class="primary-button">
+                        Add your first book +
+                    </a>
+                {% endif %}
+            </div>
+
+        {% endif %}
+    </section>
+
+    <section class="add-section" id="add-book">
+        <div class="add-intro">
+            <span class="eyebrow">GROW YOUR COLLECTION</span>
+            <h2>A new chapter<br>begins here.</h2>
+            <p>Every book has a place on your shelf.</p>
+        </div>
+
+        <form class="add-form" action="{{ url_for('add_book') }}" method="POST">
+
+            <div class="field">
+                <label for="title">Book title *</label>
+                <input
+                    id="title"
+                    name="title"
+                    type="text"
+                    placeholder="e.g. Little Women"
+                    maxlength="200"
+                    required
+                >
+            </div>
+
+            <div class="field">
+                <label for="author">Author *</label>
+                <input
+                    id="author"
+                    name="author"
+                    type="text"
+                    placeholder="e.g. Louisa May Alcott"
+                    maxlength="150"
+                    required
+                >
+            </div>
+
+            <div class="field">
+                <label for="genre">Genre</label>
+                <input
+                    id="genre"
+                    name="genre"
+                    type="text"
+                    placeholder="e.g. Classic, Fantasy"
+                    maxlength="100"
+                >
+            </div>
+
+            <div class="field">
+                <label for="new-status">Reading status</label>
+                <select id="new-status" name="reading_status">
+                    {% for status in statuses %}
+                        <option value="{{ status }}">{{ status }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <button class="primary-button submit-button" type="submit">
+                Add to my archive +
+            </button>
+
+        </form>
+    </section>
+
+    <footer class="footer">
+        <a class="brand footer-brand" href="{{ url_for('home') }}">
+            <span class="brand-icon">b.</span>
+            <span>the book archive</span>
+        </a>
+        <p>A little corner of the world, made for readers. ♡</p>
+    </footer>
+
+</main>
+
+</body>
+</html>

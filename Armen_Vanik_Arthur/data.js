@@ -1,0 +1,17 @@
+const skzbnakanapranqner = [
+ { id: 1, title: "iPhone 15 Pro", category: "electronics", price: 999, rating: 4.9, stock: 10, image: "https://images.unsplash.com/photo-1695048133142-1a20484d2569?w=500", description: "Apple A17 Pro տիտանե կորպուս" },
+ { id: 2, title: "Galaxy S24 Ultra", category: "electronics", price: 1199, rating: 4.8, stock: 8, image: "https://images.unsplash.com/photo-1610945265064-0e34e5519bbf?w=500", description: "Samsung-ի ֆլագմանը Galaxy AI-ով" },
+ { id: 3, title: "MacBook Pro 16", category: "electronics", price: 2499, rating: 5.0, stock: 5, image: "https://images.unsplash.com/photo-1517336714731-489689fd1ca8?w=500", description: "M3 Max չիպով հզոր նոթբուք" },
+ { id: 4, title: "Galaxy Book 4 Pro", category: "electronics", price: 1449, rating: 4.7, stock: 7, image: "https://images.unsplash.com/photo-1541807084-5c52b6b3adef?w=500", description: "Ուլտրապարզ AMOLED նոթբուք" },
+ { id: 5, title: "iPad Air M2", category: "electronics", price: 599, rating: 4.8, stock: 12, image: "https://images.unsplash.com/photo-1544244015-0df4b3ffc6b0?w=500", description: "Թեթև և հզոր պլանշետ" },
+ { id: 6, title: "Galaxy Tab S9", category: "electronics", price: 799, rating: 4.6, stock: 9, image: "https://images.unsplash.com/photo-1561154464-82e9adf32764?w=500", description: "Ջրակայուն AMOLED պլանշետ" },
+ { id: 7, title: "AirPods Pro 2", category: "electronics", price: 249, rating: 4.9, stock: 25, image: "https://images.unsplash.com/photo-1600294037681-c80b4cb5b434?w=500", description: "Անլար ականջակալներ ANC-ով" },
+ { id: 8, title: "Galaxy Buds2 Pro", category: "electronics", price: 189, rating: 4.5, stock: 18, image: "https://images.unsplash.com/photo-1590658268037-6bf12165a8df?w=500", description: "Hi-Fi 24-bit անլար ձայն" },
+ { id: 9, title: "Apple Watch Ultra 2", category: "electronics", price: 799, rating: 4.9, stock: 6, image: "https://images.unsplash.com/photo-1508685096489-7aacd43bd3b1?w=500", description: "Ամուր սպորտային ժամացույց" },
+ { id: 10, title: "Galaxy Watch 6", category: "electronics", price: 299, rating: 4.7, stock: 14, image: "https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=500", description: "Էլեգանտ խելացի ժամացույց" },
+ { id: 31, title: "Snickers Super Bar", category: "sweets", price: 2, rating: 4.9, stock: 100, image: "https://images.unsplash.com/photo-1582293041079-7814c2f12063?w=500", description: "Գետնանուշով կարամելով և շոկոլադով բատոն" },
+ { id: 32, title: "Twix Xtra Pack", category: "sweets", price: 2, rating: 4.8, stock: 90, image: "https://images.unsplash.com/photo-1621939514649-280e2ee25f60?w=500", description: "Խրթխրթան թխվածքաբլիթ կարամելով" },
+ { id: 33, title: "KitKat 4-Finger", category: "sweets", price: 1.5, rating: 4.9, stock: 120, image: "https://images.unsplash.com/photo-1581798459219-318e76aecc7b?w=500", description: "Վաֆլե փայտիկներ շոկոլադապատ" },
+ { id: 34, title: "Mars Chocolate Bar", category: "sweets", price: 2, rating: 4.7, stock: 80, image: "https://images.unsplash.com/photo-1606313564200-e75d5e30476c?w=500", description: "Նուգայով և կարամելով շոկոլադ" },
+ { id: 35, title: "Bounty Coconut", category: "sweets", price: 2, rating: 4.8, stock: 85, image: "https://images.unsplash.com/photo-1548907040-4baa42d10919?w=500", description: "Կոկոսի միջուկով կաթնային շոկոլադ" }
+]

@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="hy">
+<head>
+ <meta charset="UTF-8">
+ <meta name="viewport" content="width=device-width, initial-scale=1.0">
+ <title>OnlineShop - Զամբյուղ</title>
+ <link rel="stylesheet" href="style.css">
+</head>
+<body>
+ <header class="navbar">
+ <div class="logo"><a href="index.html">OnlineShop</a></div>
+ <nav class="nav-links">
+ <a href="index.html">Գլխավոր</a>
+ <a href="shop.html">Խանութ</a>
+ <a href="favorites.html">Նախընտրածներ (<span id="sirats-qanak">0</span>)</a>
+ <a href="cart.html" class="active">Զամբյուղ (<span id="zambyugh-qanak">0</span>)</a>
+ <a href="login.html">Մուտք</a>
+ </nav>
+ </header>
+
+ <main>
+ <h2>Զամբյուղ</h2>
+ <div id="zambyugh-amutq" style="margin-top: 1.5rem;"></div>
+ </main>
+
+ <div id="tsanucum" class="toast"></div>
+
+ <script src="data.js"></script>
+ <script src="api.js"></script>
+ <script src="store.js"></script>
+ <script src="app.js"></script>
+ <script>
+
+ function poxelqanak(id, ppx) {
+ const apranq = zambyughipahots.stanalapranqnere().find(a => a.id === id);
+ // stock was saved with the item when it was added; the server re-checks at checkout
+ if (apranq && ppx > 0 && apranq.quantity + ppx > apranq.stock) {
+ cuygtsanucum("Պահեստում այլևս չկա");
+ return;
+ }
+ zambyughipahots.qanakpoxel(id, ppx);
+ nkarzambyugh();
+ }
+
+ async function vcharel() {
+ const ogtater = JSON.parse(localStorage.getItem('ogtater') || 'null');
+ if (!ogtater) {
+ cuygtsanucum("Պատվիրելու համար մուտք գործեք");
+ setTimeout(() => location.href = 'login.html', 1200);
+ return;
+ }
+ try {
+ const patasxan = await patvirel(zambyughipahots.stanalapranqnere());
+ zambyughipahots.pahal([]);
+ nkarzambyugh();
+ cuygtsanucum("Պատվերը ձևակերպված է #" + patasxan.orderId);
+ } catch (sxal) {
+ cuygtsanucum(sxal.message);
+ }
+ }
+
+ function nkarzambyugh() {
+ const apranqner = zambyughipahots.stanalapranqnere();
+ const konteyner = document.getElementById("zambyugh-amutq");
+
+ if (apranqner.length === 0) {
+ konteyner.innerHTML = `<div class="empty-state">Ձեր զամբյուղը դատարկ է</div>`;
+ return;
+ }
+
+ const gumar = apranqner.reduce((gumar, apranq) => gumar + (apranq.price * apranq.quantity), 0);
+
+ konteyner.innerHTML = `
+ <table class="cart-table">
+ <thead>
+ <tr>
+ <th>Նկար</th>
+ <th>Անվանում</th>
+ <th>Գին</th>
+ <th>Քանակ</th>
+ <th>Ընդհանուր</th>
+ <th></th>
+ </tr>
+ </thead>
+ <tbody>
+ ${apranqner.map(apranq => `
+ <tr>
+ <td><img src="${apranq.image}"></td>
+ <td>${apranq.title}</td>
+ <td>$${apranq.price}</td>
+ <td>
+ <button class="qty-btn" onclick="poxelqanak(${apranq.id}, -1)">-</button>
+ <span style="margin: 0 0.5rem;">${apranq.quantity}</span>
+ <button class="qty-btn" onclick="poxelqanak(${apranq.id}, 1)">+</button>
+ </td>
+ <td>$${(apranq.price * apranq.quantity).toFixed(2)}</td>
+ <td><button style="background:none; border:none; color:red; cursor:pointer;" onclick="zambyughipahots.hacnelapranq(${apranq.id}); nkarzambyugh();">✖</button></td>
+ </tr>
+ `).join('')}
+ </tbody>
+ </table>
+ <div style="display:flex; justify-content:space-between; align-items:center;">
+ <h3>Ընդամենը: $${gumar.toFixed(2)}</h3>
+ <button class="auth-submit-btn" style="width: auto; padding: 0.8rem 2rem;" onclick="vcharel()">Վճարել</button>
+ </div>
+ `;
+ }
+ nkarzambyugh();
+ </script>
+</body>
+</html>

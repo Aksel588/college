@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block title %}Log in | DreamTrip{% endblock %}
+{% block content %}
+<section class="auth-section">
+    <div class="auth-image auth-image-login">
+        <div class="auth-image-copy"><p class="eyebrow eyebrow-light">WELCOME BACK</p><h2>Your next<br>great story is <em>calling.</em></h2></div>
+    </div>
+    <div class="auth-form-side">
+        <form class="auth-form" method="POST" action="{{ url_for('login') }}">
+            <p class="eyebrow">YOUR JOURNEY CONTINUES</p>
+            <h1>Welcome <em>back.</em></h1>
+            <p class="auth-subtitle">Log in to view your trips and plan your next escape.</p>
+            <label for="email">Email address</label>
+            <input id="email" name="email" type="email" autocomplete="email" placeholder="you@example.com" required>
+            <label for="password">Password</label>
+            <input id="password" name="password" type="password" autocomplete="current-password" placeholder="Your password" required>
+            <button class="button button-dark button-full" type="submit">Log in <span>↗</span></button>
+            <p class="auth-switch">New to DreamTrip? <a href="{{ url_for('register') }}">Create an account</a></p>
+        </form>
+    </div>
+</section>
+{% endblock %}

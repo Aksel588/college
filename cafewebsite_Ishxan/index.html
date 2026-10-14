@@ -1,0 +1,123 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cafe Website</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <header>
+        <div class="logo">Cafe<span>Website</span></div>
+
+        <nav>
+            <a href="#home">Home</a>
+            <a href="#about">About Us</a>
+            <a href="#menu">Menu</a>
+            <a href="#contact">Contact</a>
+        </nav>
+
+        <a href="#menu" class="nav-button">Order Now</a>
+    </header>
+
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <p class="subtitle">WELCOME TO OUR CAFE</p>
+            <h1>Fresh Coffee,<br>Sweet Moments</h1>
+            <p>
+                Enjoy delicious coffee and freshly prepared desserts
+                in a warm and cozy atmosphere.
+            </p>
+            <a href="#menu" class="main-button">Explore Menu</a>
+        </div>
+    </section>
+
+    <section class="about" id="about">
+        <div class="about-image">
+            <img
+                src="https://images.unsplash.com/photo-1445116572660-236099ec97a0?auto=format&fit=crop&w=900&q=80"
+                alt="Cozy coffee shop">
+        </div>
+
+        <div class="about-content">
+            <p class="subtitle">OUR STORY</p>
+            <h2>About Our Cafe</h2>
+            <p>
+                We believe that every cup of coffee can make your day
+                better. Our cafe offers delicious drinks, tasty cakes
+                and a comfortable place to relax with friends.
+            </p>
+            <a href="#menu" class="main-button">Discover Our Menu</a>
+        </div>
+    </section>
+
+    <section class="menu-section" id="menu">
+        <p class="subtitle">TASTE SOMETHING SPECIAL</p>
+        <h2>Our Menu</h2>
+        <p class="section-description">
+            Choose your favorite coffee or dessert.
+        </p>
+
+        <div class="categories">
+            <button class="category-btn active" data-category="All">All</button>
+            <button class="category-btn" data-category="Coffee">Coffee</button>
+            <button class="category-btn" data-category="Iced Coffee">Iced Coffee</button>
+            <button class="category-btn" data-category="Cakes">Cakes</button>
+        </div>
+
+        <div class="menu-grid" id="menu-grid">
+            <p>Loading menu...</p>
+        </div>
+        
+<div class="cart-section" id="cart">
+    <h2>Your Order</h2>
+    <p class="section-description">
+        Choose products and quantities for your order.
+    </p>
+
+    <div id="cart-items">
+        <p>Your cart is empty.</p>
+    </div>
+
+    <h3 class="cart-total">
+        Total: $<span id="cart-total">0.00</span>
+    </h3>
+
+    <form id="checkout-form">
+        <input
+            type="text"
+            id="customer-name"
+            placeholder="Your name"
+            required
+        >
+
+        <input
+            type="tel"
+            id="customer-phone"
+            placeholder="Your phone number"
+            required
+        >
+
+        <button type="submit" class="main-button">
+            Place Order
+        </button>
+    </form>
+</div>
+    </section>
+
+    <section class="contact" id="contact">
+        <p class="subtitle">COME AND VISIT US</p>
+        <h2>Make Your Day Better</h2>
+        <p>Great coffee, delicious desserts and good company.</p>
+        <a href="#menu" class="main-button">Order Now</a>
+    </section>
+
+    <footer>
+        <p>&copy; 2026 CafeWebsite. All rights reserved.</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

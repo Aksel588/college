@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="hy">
+<head>
+ <meta charset="UTF-8">
+ <meta name="viewport" content="width=device-width, initial-scale=1.0">
+ <title>OnlineShop - Նախընտրածներ</title>
+ <link rel="stylesheet" href="style.css">
+</head>
+<body>
+ <header class="navbar">
+ <div class="logo"><a href="index.html">OnlineShop</a></div>
+ <nav class="nav-links">
+ <a href="index.html">Գլխավոր</a>
+ <a href="shop.html">Խանութ</a>
+ <a href="favorites.html" class="active">Նախընտրածներ (<span id="sirats-qanak">0</span>)</a>
+ <a href="cart.html">Զամբյուղ (<span id="zambyugh-qanak">0</span>)</a>
+ <a href="login.html">Մուտք</a>
+ </nav>
+ </header>
+
+ <main>
+ <h2>Նախընտրած Ապրանքներ</h2>
+ <div id="sirats-apranqner" class="products-grid"></div>
+ </main>
+
+ <div id="lracucich-patuhan" class="modal hidden"></div>
+ <div id="tsanucum" class="toast"></div>
+
+ <script src="data.js"></script>
+ <script src="api.js"></script>
+ <script src="store.js"></script>
+ <script src="app.js"></script>
+ <script>
+ 
+ function nkarsiratsner() {
+ const apranqner = siratsipahots.stanalapranqnere();
+ if(apranqner.length === 0) {
+ document.getElementById("sirats-apranqner").innerHTML = `<div class="empty-state">Նախընտրած ապրանքներ չկան</div>`;
+ } else {
+ nkartsncel(apranqner, "sirats-apranqner");
+ }
+ }
+ nkarsiratsner();
+ </script>
+</body>
+</html>

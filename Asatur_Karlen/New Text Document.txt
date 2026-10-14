@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="hy">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>TechZone | Electronics Store</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/sql.js/1.10.3/sql-wasm.js"></script>
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#f3f6fb;color:#172033;font-family:Arial,sans-serif}
+header{background:#101a31;color:white;padding:22px 6%;display:flex;justify-content:space-between;align-items:center;gap:15px;flex-wrap:wrap}
+.logo{font-size:25px;font-weight:bold;color:#55c4ff}
+nav a{color:white;text-decoration:none;margin-left:20px}
+.hero{background:linear-gradient(120deg,#10213f,#1265a8);color:white;padding:55px 6%}
+.hero h1{font-size:38px;margin:0 0 12px}
+.hero p{color:#d4e9ff}
+button{border:0;border-radius:7px;padding:11px 16px;cursor:pointer;font-weight:bold;background:#087fd1;color:white}
+button:hover{opacity:.85}
+main{padding:30px 6%;max-width:1400px;margin:auto}
+.tools{display:flex;gap:10px;margin-bottom:22px;flex-wrap:wrap}
+input,select,textarea{padding:12px;border:1px solid #ccd5e2;border-radius:7px;font:inherit}
+#search{flex:1;min-width:180px}
+.products{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:18px}
+.card{background:white;border-radius:12px;padding:20px;box-shadow:0 3px 14px #1427460d}
+.pic{height:120px;display:grid;place-items:center;background:#edf5ff;border-radius:9px;margin-bottom:15px;overflow:hidden}
+.pic img{width:100%;height:100%;object-fit:cover}
+.card h3{margin:8px 0}
+.price{font-size:21px;font-weight:bold;color:#0877c9;margin:14px 0}
+.card small{color:#68758a}
+.section{margin-top:45px}
+.panel{background:#101827;color:#e5edf9;border-radius:12px;padding:22px}
+.panel h2{color:#67c9ff}
+textarea{width:100%;height:160px;background:#182438;color:#b8f7d1;border-color:#3b4c64;font-family:monospace;font-size:14px}
+.actions{display:flex;gap:10px;flex-wrap:wrap;margin:12px 0}
+.secondary{background:#34465f}
+#result{overflow-x:auto;margin-top:16px}
+table{border-collapse:collapse;width:100%;background:white;color:#172033}
+th,td{padding:10px;border:1px solid #dce3ed;text-align:left}
+th{background:#dceeff}
+.notice{color:#ffcd7b}
+#cart{background:white;padding:18px;border-radius:10px;margin-top:20px}
+footer{text-align:center;padding:30px;color:#718096}
+</style>
+</head>
+<body>
+<header>
+  <div class="logo">⚡ TechZone</div>
+  <nav>
+    <a href="#shop">Խանութ</a>
+    <a href="#cart">Զամբյուղ 🛒 <span id="count">0</span></a>
+    <a href="#database">SQL Database</a>
+  </nav>
+</header>
+
+<section class="hero">
+  <h1>Տեխնոլոգիաները՝ մեկ վայրում</h1>
+  <p>Հեռախոսներ, նոթբուքեր և աքսեսուարներ՝ մեկ օնլայն խանութում։</p>
+  <button onclick="document.getElementById('shop').scrollIntoView()">Դիտել ապրանքները ↓</button>
+</section>
+
+<main>
+<section id="shop">
+  <h2>Մեր ապրանքները</h2>
+  <div class="tools">
+    <input id="search" placeholder="Փնտրել ապրանք..." oninput="renderProducts()">
+    <select id="category" onchange="renderProducts()">
+      <option value="">Բոլոր կատեգորիաները</option>
+      <option>Հեռախոսներ</option>
+      <option>Նոթբուքեր</option>
+      <option>Ականջակալներ</option>
+      <option>Աքսեսուարներ</option>
+    </select>
+  </div>
+  <div id="products" class="products">Տվյալների բազան բեռնվում է...</div>
+</section>
+
+<section id="cart" class="section">
+  <h2>🛒 Գնումների զամբյուղ</h2>
+  <div id="cartItems">Զամբյուղը դատարկ է։</div>
+  <p><b>Ընդհանուր՝ <span id="total">0</span> ֏</b></p>
+  <input id="customer" placeholder="Հաճախորդի անունը">
+  <button onclick="checkout()">Պատվիրել</button>
+  <p id="orderMessage"></p>
+</section>
+
+<section id="database" class="section panel">
+  <h2>🗄️ SQL Database Console</h2>
+  <p>Այստեղ կարող ես գրել SQL հրամաններ և տեսնել արդյունքը։</p>
+  <p class="notice">SQLite տվյալների բազա • Աշխատում է բրաուզերում</p>
+  <div class="actions">
+    <button onclick="sample('SELECT * FROM products;')">Բոլոր ապրանքները</button>
+    <button onclick="sample('SELECT category, COUNT(*) AS count FROM products GROUP BY category;')">Կատեգորիաներ</button>
+    <button onclick="sample('SELECT name, price FROM products ORDER BY price DESC;')">Գների դասավորում</button>
+    <button class="secondary" onclick="sample('SELECT o.id, c.name AS customer, o.total, o.created_at FROM orders o JOIN customers c ON c.id = o.customer_id;')">Պատվերներ JOIN-ով</button>
+  </div>
+  <textarea id="query">SELECT * FROM products;</textarea>
+  <div class="actions">
+    <button onclick="runSQL()">▶ Run SQL</button>
+    <button class="secondary" onclick="showSchema()">Տվյալների բազայի կառուցվածք</button>
+  </div>
+  <div id="result"></div>
+</section>
+</main>
+
+<footer>TechZone © 2026 | Electronics Store & SQL Learning Project</footer>
+
+<script>
+let db = null;
+let cart = {};
+let ready = false;
+
+const initialProducts = [
+  [1,'iPhone 16','Հեռախոսներ',329000,8,'https://images.unsplash.com/photo-1695048133142-1a20484d2569?w=400&q=80'],
+  [2,'Samsung Galaxy S25','Հեռախոսներ',299000,10,'https://images.unsplash.com/photo-1610945265064-0e34e5519bbf?w=400&q=80'],
+  [3,'MacBook Air M4','Նոթբուքեր',549000,5,'https://images.unsplash.com/photo-1517336714731-489689fd1ca8?w=400&q=80'],
+  [4,'Lenovo IdeaPad','Նոթբուքեր',259000,7,'https://images.unsplash.com/photo-1588872657578-7efd1f1555ed?w=400&q=80'],
+  [5,'Sony WH-1000XM5','Ականջակալներ',119000,12,'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=400&q=80'],
+  [6,'AirPods Pro','Ականջակալներ',99000,15,'https://images.unsplash.com/photo-1600294037681-c80b4cb5b434?w=400&q=80'],
+  [7,'Logitech Mouse','Աքսեսուարներ',18000,20,'https://images.unsplash.com/photo-1615663245857-ac93bb7c39e7?w=400&q=80'],
+  [8,'USB-C Charger','Աքսեսուարներ',12000,25,'https://images.unsplash.com/photo-1583863788434-e58a36330cf0?w=400&q=80']
+];
+
+async function init() {
+  try {
+    const SQL = await initSqlJs({
+      locateFile: file =>
+        'https://cdnjs.cloudflare.com/ajax/libs/sql.js/1.10.3/' + file
+    });
+
+    db = new SQL.Database();
+
+    db.run(`
+      CREATE TABLE products(
+        id INTEGER PRIMARY KEY,
+        name TEXT NOT NULL,
+        category TEXT,
+        price REAL NOT NULL,
+        stock INTEGER DEFAULT 0,
+        emoji TEXT
+      );
+
+      CREATE TABLE customers(
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        name TEXT NOT NULL
+      );
+
+      CREATE TABLE orders(
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        customer_id INTEGER,
+        total REAL NOT NULL,
+        created_at TEXT DEFAULT CURRENT_TIMESTAMP,
+        FOREIGN KEY(customer_id) REFERENCES customers(id)
+      );
+
+      CREATE TABLE order_items(
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        order_id INTEGER,
+        product_id INTEGER,
+        quantity INTEGER,
+        unit_price REAL,
+        FOREIGN KEY(order_id) REFERENCES orders(id),
+        FOREIGN KEY(product_id) REFERENCES products(id)
+      );
+    `);
+
+    const stmt = db.prepare(
+      'INSERT INTO products VALUES (?, ?, ?, ?, ?, ?)'
+    );
+    initialProducts.forEach(p => stmt.run(p));
+    stmt.free();
+
+    ready = true;
+    renderProducts();
+    sample('SELECT * FROM products;');
+  } catch (e) {
+    document.getElementById('products').textContent =
+      'Չհաջողվեց բեռնել SQL գրադարանը։ Ստուգիր ինտերնետային կապը։';
+    document.getElementById('result').textContent = e.message;
+  }
+}
+
+function money(n) {
+  return Number(n).toLocaleString('en-US') + ' ֏';
+}
+
+function renderProducts() {
+  if (!ready) return;
+  const term = document.getElementById('search').value.toLowerCase();
+  const cat = document.getElementById('category').value;
+
+  const stmt = db.prepare(
+    'SELECT * FROM products WHERE lower(name) LIKE ? AND category LIKE ? ORDER BY id'
+  );
+  stmt.bind(['%' + term + '%', cat || '%']);
+
+  let html = '';
+  while (stmt.step()) {
+    const p = stmt.getAsObject();
+    html += `<article class="card">
+      <div class="pic"><img src="${escapeHTML(p.emoji || '')}" alt="${escapeHTML(p.name)}"></div>
+      <small>${escapeHTML(p.category || '')} · Պահեստում՝ ${p.stock}</small>
+      <h3>${escapeHTML(p.name)}</h3>
+      <div class="price">${money(p.price)}</div>
+      <button onclick="addToCart(${p.id})" ${p.stock <= 0 ? 'disabled' : ''}>Ավելացնել զամբյուղ</button>
+    </article>`;
+  }
+  stmt.free();
+
+  document.getElementById('products').innerHTML =
+    html || '<p>Ապրանքներ չեն գտնվել։</p>';
+}
+
+function escapeHTML(s) {
+  return String(s).replace(/[&<>"']/g, c => ({
+    '&':'&amp;', '<':'&lt;', '>':'&gt;',
+    '"':'&quot;', "'":'&#39;'
+  })[c]);
+}
+
+function addToCart(id) {
+  const row = db.exec('SELECT stock FROM products WHERE id=' + Number(id));
+  if (!row.length || !row[0].values.length) return;
+  const stock = row[0].values[0][0];
+  if ((cart[id] || 0) >= stock) {
+    alert('Պահեստում այսքան ապրանք չկա։');
+    return;
+  }
+  cart[id] = (cart[id] || 0) + 1;
+  renderCart();
+}
+
+function renderCart() {
+  let total = 0, count = 0, html = '';
+  for (const id of Object.keys(cart)) {
+    const rows = db.exec('SELECT name,price FROM products WHERE id=' + Number(id));
+    if (!rows.length || !rows[0].values.length) continue;
+    const [name, price] = rows[0].values[0];
+    const qty = cart[id];
+    total += price * qty;
+    count += qty;
+    html += `<p>${escapeHTML(name)} × ${qty} — ${money(price * qty)}
+      <button class="secondary" onclick="removeItem(${id})">−</button></p>`;
+  }
+  document.getElementById('cartItems').innerHTML = html || 'Զամբյուղը դատարկ է։';
+  document.getElementById('total').textContent = money(total);
+  document.getElementById('count').textContent = count;
+}
+
+function removeItem(id) {
+  cart[id]--;
+  if (cart[id] <= 0) delete cart[id];
+  renderCart();
+}
+
+function checkout() {
+  if (!ready) return;
+  const name = document.getElementById('customer').value.trim();
+  const message = document.getElementById('orderMessage');
+
+  if (!name) {
+    message.textContent = 'Մուտքագրիր հաճախորդի անունը։';
+    return;
+  }
+  if (!Object.keys(cart).length) {
+    message.textContent = 'Զամբյուղը դատարկ է։';
+    return;
+  }
+
+  try {
+    db.run('BEGIN TRANSACTION');
+    db.run('INSERT INTO customers(name) VALUES (?)', [name]);
+    const customerId = db.exec('SELECT last_insert_rowid()')[0].values[0][0];
+
+    let total = 0;
+    for (const id of Object.keys(cart)) {
+      const product = db.exec(
+        'SELECT price, stock FROM products WHERE id=' + Number(id)
+      )[0].values[0];
+      if (cart[id] > product[1]) throw new Error('Ապրանքի քանակը բավարար չէ։');
+      total += product[0] * cart[id];
+    }
+
+    db.run('INSERT INTO orders(customer_id,total) VALUES (?,?)',
+      [customerId,total]);
+    const orderId = db.exec('SELECT last_insert_rowid()')[0].values[0][0];
+
+    for (const id of Object.keys(cart)) {
+      const product = db.exec(
+        'SELECT price FROM products WHERE id=' + Number(id)
+      )[0].values[0];
+      db.run(
+        'INSERT INTO order_items(order_id,product_id,quantity,unit_price) VALUES (?,?,?,?)',
+        [orderId,Number(id),cart[id],product[0]]
+      );
+      db.run('UPDATE products SET stock=stock-? WHERE id=?',
+        [cart[id],Number(id)]);
+    }
+
+    db.run('COMMIT');
+    cart = {};
+    renderCart();
+    renderProducts();
+    message.textContent = 'Պատվերը հաջողությամբ գրանցվեց։ Պատվերի համար՝ ' + orderId;
+    sample('SELECT o.id, c.name AS customer, o.total, o.created_at FROM orders o JOIN customers c ON c.id=o.customer_id;');
+  } catch(e) {
+    try { db.run('ROLLBACK'); } catch (_) {}
+    message.textContent = 'Սխալ՝ ' + e.message;
+  }
+}
+
+function sample(sql) {
+  document.getElementById('query').value = sql;
+  runSQL();
+}
+
+function showSchema() {
+  sample("SELECT name, sql FROM sqlite_master WHERE type='table' ORDER BY name;");
+}
+
+function runSQL() {
+  if (!ready) {
+    document.getElementById('result').textContent = 'Տվյալների բազան բեռնվում է...';
+    return;
+  }
+  const out = document.getElementById('result');
+  out.innerHTML = '';
+
+  try {
+    const results = db.exec(document.getElementById('query').value);
+    if (!results.length) {
+      out.textContent = 'Հրամանը կատարվեց։ Արդյունք վերադարձնող տվյալներ չկան։';
+    }
+
+    results.forEach(r => {
+      const table = document.createElement('table');
+      const thead = document.createElement('thead');
+      const tr = document.createElement('tr');
+
+      r.columns.forEach(col => {
+        const th = document.createElement('th');
+        th.textContent = col;
+        tr.appendChild(th);
+      });
+      thead.appendChild(tr);
+      table.appendChild(thead);
+
+      const tbody = document.createElement('tbody');
+      r.values.forEach(row => {
+        const tr = document.createElement('tr');
+        row.forEach(value => {
+          const td = document.createElement('td');
+          td.textContent = value === null ? 'NULL' : value;
+          tr.appendChild(td);
+        });
+        tbody.appendChild(tr);
+      });
+      table.appendChild(tbody);
+      out.appendChild(table);
+    });
+
+    renderProducts();
+  } catch(e) {
+    out.textContent = 'SQL Error: ' + e.message;
+  }
+}
+
+init();
+</script>
+</body>
+</html>

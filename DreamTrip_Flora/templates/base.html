@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#f8f5ef">
+    <title>{% block title %}DreamTrip | Travel beautifully{% endblock %}</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+<header class="site-header">
+    <div class="nav-wrap">
+        <a class="brand" href="{{ url_for('home') }}"><span class="brand-mark">D</span> dreamtrip<span class="brand-dot">.</span></a>
+        <button class="menu-toggle" aria-label="Open navigation" onclick="document.querySelector('.nav-links').classList.toggle('open')">☰</button>
+        <nav class="nav-links">
+            <a href="{{ url_for('home') }}">Home</a>
+            <a href="{{ url_for('destinations') }}">Destinations</a>
+            {% if session.get('user_id') %}
+                <a href="{{ url_for('my_bookings') }}">My trips</a>
+                <span class="nav-greeting">Hi, {{ session.get('full_name', '').split(' ')[0] }}</span>
+                <a class="nav-button" href="{{ url_for('logout') }}">Log out</a>
+            {% else %}
+                <a href="{{ url_for('login') }}">Log in</a>
+                <a class="nav-button" href="{{ url_for('register') }}">Join us <span>↗</span></a>
+            {% endif %}
+        </nav>
+    </div>
+</header>
+
+{% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+    <div class="flash-wrap">
+        {% for category, message in messages %}
+            <div class="flash flash-{{ category }}">{{ message }}</div>
+        {% endfor %}
+    </div>
+    {% endif %}
+{% endwith %}
+
+{% if error_message %}
+<section class="section container empty-state">
+    <p class="eyebrow">A LITTLE DETOUR</p>
+    <h1>{{ error_message }}</h1>
+    <a class="button button-dark" href="{{ url_for('home') }}">Back home</a>
+</section>
+{% else %}
+{% block content %}{% endblock %}
+{% endif %}
+
+<footer class="site-footer">
+    <div class="footer-main">
+        <a class="brand brand-light" href="{{ url_for('home') }}"><span class="brand-mark">D</span> dreamtrip<span class="brand-dot">.</span></a>
+        <p>Thoughtfully chosen places. Unforgettable journeys.</p>
+        <a href="{{ url_for('destinations') }}">Find your next escape ↗</a>
+    </div>
+    <div class="footer-bottom"><span>© {{ today[:4] }} DreamTrip Travel</span><span>Made for the love of discovering.</span></div>
+</footer>
+</body>
+</html>

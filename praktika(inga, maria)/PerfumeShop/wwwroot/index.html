@@ -1,0 +1,510 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Maison Scent | Fine Fragrances</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #faf7f3;
+            color: #29201f;
+        }
+
+        header {
+            padding: 25px 8%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #e8ded6;
+        }
+
+        .logo {
+            font-family: Georgia, serif;
+            font-size: 25px;
+            letter-spacing: 3px;
+        }
+
+        nav a {
+            color: #29201f;
+            text-decoration: none;
+            margin-left: 25px;
+            font-size: 13px;
+        }
+
+        .hero {
+            background: #38252e;
+            color: #fff8f0;
+            padding: 75px 8%;
+            text-align: center;
+        }
+
+        .hero p {
+            color: #d9c4b8;
+            letter-spacing: 4px;
+            font-size: 11px;
+            margin-bottom: 20px;
+        }
+
+        .hero h1 {
+            font-family: Georgia, serif;
+            font-size: clamp(36px, 6vw, 65px);
+            font-weight: normal;
+            margin-bottom: 18px;
+        }
+
+        .hero .description {
+            font-size: 15px;
+            letter-spacing: 0;
+            line-height: 1.7;
+            max-width: 520px;
+            margin: 0 auto 25px;
+        }
+
+        .hero a {
+            display: inline-block;
+            padding: 13px 25px;
+            background: #d8b995;
+            color: #30212a;
+            text-decoration: none;
+            font-size: 12px;
+            letter-spacing: 1px;
+        }
+
+        main {
+            max-width: 1200px;
+            margin: auto;
+            padding: 55px 25px;
+        }
+
+        .section-title {
+            text-align: center;
+            font-family: Georgia, serif;
+            font-size: 35px;
+            font-weight: normal;
+            margin-bottom: 12px;
+        }
+
+        .section-description {
+            text-align: center;
+            color: #857873;
+            margin-bottom: 30px;
+            font-size: 14px;
+        }
+
+        .filters {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            margin-bottom: 35px;
+            flex-wrap: wrap;
+        }
+
+        input, select {
+            padding: 13px;
+            border: 1px solid #ded3ca;
+            background: white;
+            color: #29201f;
+            font-size: 14px;
+            outline: none;
+        }
+
+        input {
+            width: min(320px, 100%);
+        }
+
+        select {
+            min-width: 180px;
+        }
+
+        .products {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 25px;
+        }
+
+        .card {
+            background: white;
+            border: 1px solid #eee5de;
+            padding-bottom: 20px;
+            transition: transform 0.2s;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+        }
+
+        .bottle-area {
+            height: 245px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .rose { background: #ead9d5; }
+        .amber { background: #e7d5bd; }
+        .green { background: #d7ded0; }
+        .blue { background: #d7dce7; }
+        .pink { background: #f0dce1; }
+        .brown { background: #d9c8b7; }
+
+        .bottle {
+            width: 105px;
+            height: 135px;
+            border: 2px solid rgba(255,255,255,0.8);
+            border-radius: 17px 17px 24px 24px;
+            background: linear-gradient(110deg,
+                rgba(255,255,255,0.8),
+                rgba(255,255,255,0.15) 40%,
+                rgba(110,75,60,0.18));
+            box-shadow: 12px 16px 25px rgba(50,30,25,0.15);
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .bottle::before {
+            content: "";
+            position: absolute;
+            top: -24px;
+            width: 32px;
+            height: 24px;
+            background: #9c8068;
+            border-radius: 4px 4px 1px 1px;
+        }
+
+        .bottle::after {
+            content: "MAISON";
+            font-family: Georgia, serif;
+            font-size: 10px;
+            letter-spacing: 2px;
+            color: #59433c;
+            border-top: 1px solid rgba(89,67,60,0.4);
+            border-bottom: 1px solid rgba(89,67,60,0.4);
+            padding: 8px 0;
+        }
+
+        .product-info {
+            padding: 20px 18px 0;
+            text-align: center;
+        }
+
+        .brand {
+            color: #9b7862;
+            font-size: 10px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 9px;
+        }
+
+        .product-info h3 {
+            font-family: Georgia, serif;
+            font-size: 22px;
+            font-weight: normal;
+            margin-bottom: 9px;
+        }
+
+        .notes {
+            color: #897d76;
+            font-size: 12px;
+            margin-bottom: 15px;
+        }
+
+        .price {
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+
+        .details {
+            display: inline-block;
+            border: 1px solid #38252e;
+            padding: 10px 20px;
+            color: #38252e;
+            background: white;
+            cursor: pointer;
+        }
+
+        .details:hover {
+            background: #38252e;
+            color: white;
+        }
+
+        #message {
+            text-align: center;
+            color: #857873;
+            margin: 30px 0;
+        }
+
+        .about {
+            margin-top: 65px;
+            background: #eee5dc;
+            padding: 40px 25px;
+            text-align: center;
+        }
+
+        .about h2 {
+            font-family: Georgia, serif;
+            font-size: 30px;
+            font-weight: normal;
+            margin-bottom: 15px;
+        }
+
+        .about p {
+            max-width: 600px;
+            margin: auto;
+            color: #695b54;
+            line-height: 1.8;
+            font-size: 14px;
+        }
+
+        footer {
+            background: #38252e;
+            color: #e7d9d0;
+            text-align: center;
+            padding: 25px;
+            font-size: 12px;
+            letter-spacing: 1px;
+        }
+
+        @media (max-width: 750px) {
+            .products {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+
+            header {
+                padding: 20px;
+            }
+
+            nav a {
+                margin-left: 10px;
+            }
+
+            .logo {
+                font-size: 18px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .products {
+                grid-template-columns: 1fr;
+            }
+
+            .hero {
+                padding: 55px 20px;
+            }
+
+            nav a {
+                font-size: 11px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+    <div class="logo">MAISON SCENT</div>
+    <nav>
+        <a href="#home">Home</a>
+        <a href="#catalog">Collection</a>
+        <a href="#about">About Us</a>
+    </nav>
+</header>
+
+<section class="hero" id="home">
+    <p>THE ART OF FRAGRANCE</p>
+    <h1>Find Your Signature Scent</h1>
+    <div class="description">
+        Discover a world of beautiful fragrances.
+        Elegant scents, timeless memories, and a little
+        luxury for every day.
+    </div>
+    <a href="#catalog">EXPLORE COLLECTION</a>
+</section>
+
+<main id="catalog">
+    <h2 class="section-title">Our Collection</h2>
+    <p class="section-description">
+        Discover a fragrance that feels like you.
+    </p>
+
+    <div class="filters">
+        <input
+            type="text"
+            id="search"
+            placeholder="Search perfumes or brands..."
+        >
+
+        <select id="category">
+            <option value="all">All Fragrances</option>
+            <option value="Floral">Floral</option>
+            <option value="Woody">Woody</option>
+            <option value="Fresh">Fresh</option>
+            <option value="Oriental">Oriental</option>
+        </select>
+    </div>
+
+    
+<div class="products" id="products"></div>
+
+
+    <p id="message"></p>
+
+    <section class="about" id="about">
+        <h2>More Than a Fragrance</h2>
+        <p>
+            At Maison Scent, we believe that every fragrance tells a story.
+            Explore scents that express your personality and make
+            everyday moments feel special.
+        </p>
+    </section>
+</main>
+
+<footer>
+    MAISON SCENT &copy; 2026 — THE ART OF FRAGRANCE
+</footer>
+
+<script>
+   
+const search = document.getElementById("search");
+const category = document.getElementById("category");
+const productsContainer = document.getElementById("products");
+const message = document.getElementById("message");
+
+let perfumes = [];
+
+async function loadProducts() {
+    try {
+        const response = await fetch("/api/perfumes");
+
+        if (!response.ok) {
+            throw new Error("Could not load perfumes");
+        }
+
+        perfumes = await response.json();
+        filterProducts();
+    } catch (error) {
+        message.textContent =
+            "Could not load perfumes. Please try again.";
+        console.error(error);
+    }
+}
+
+function filterProducts() {
+    const searchText = search.value.toLowerCase();
+    const selectedCategory = category.value;
+
+    const filtered = perfumes.filter(function(perfume) {
+        const name = perfume.name.toLowerCase();
+        const brand = perfume.brand.toLowerCase();
+
+        const matchesSearch =
+            name.includes(searchText) ||
+            brand.includes(searchText);
+
+        const matchesCategory =
+            selectedCategory === "all" ||
+            perfume.category === selectedCategory;
+
+        return matchesSearch && matchesCategory;
+    });
+
+    productsContainer.innerHTML = "";
+
+    filtered.forEach(function(perfume) {
+        const card = document.createElement("div");
+        card.className = "card";
+
+        const bottleArea = document.createElement("div");
+        bottleArea.className = "bottle-area";
+
+        const colors = {
+            Floral: "rose",
+            Woody: "amber",
+            Fresh: "green",
+            Oriental: "brown"
+        };
+
+        bottleArea.classList.add(
+            colors[perfume.category] || "rose"
+        );
+
+        const bottle = document.createElement("div");
+        bottle.className = "bottle";
+        bottleArea.appendChild(bottle);
+
+        const info = document.createElement("div");
+        info.className = "product-info";
+
+        const brand = document.createElement("p");
+        brand.className = "brand";
+        brand.textContent = perfume.brand;
+
+        const name = document.createElement("h3");
+        name.textContent = perfume.name;
+
+        const notes = document.createElement("p");
+        notes.className = "notes";
+        notes.textContent = perfume.category + " fragrance";
+
+        const price = document.createElement("p");
+        price.className = "price";
+        price.textContent =
+            "$" + Number(perfume.price).toFixed(2);
+
+        const button = document.createElement("button");
+        button.className = "details";
+        button.textContent = "View Details";
+
+const cartButton = document.createElement("button");
+cartButton.className = "details";
+cartButton.textContent = "Add to Cart";
+
+        button.addEventListener("click", function() {
+            showDetails(
+                perfume.name,
+                perfume.brand,
+                "Category: " + perfume.category +
+                "\nPrice: $" +
+                Number(perfume.price).toFixed(2)
+            );
+        });
+
+       info.append(brand, name, notes, price, button, cartButton);
+        card.append(bottleArea, info);
+        productsContainer.appendChild(card);
+    });
+
+    if (filtered.length === 0) {
+        message.textContent =
+            "No fragrances found. Try another search.";
+    } else {
+        message.textContent =
+            filtered.length + " fragrances found.";
+    }
+}
+
+function showDetails(name, brand, description) {
+    alert(name + " — " + brand + "\n\n" + description);
+}
+
+search.addEventListener("input", filterProducts);
+category.addEventListener("change", filterProducts);
+
+loadProducts();
+ 
+</script>
+
+</body>
+</html>

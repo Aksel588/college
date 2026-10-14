@@ -1,0 +1,46 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ title }} | LunaWear</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+    <header class="navbar">
+        <a href="/" class="logo">LunaWear<span>.</span></a>
+
+        <nav>
+            <a href="/">Home</a>
+            <a href="/shop">Shop</a>
+            <a href="/cart">Cart ({{ cart_count }})</a>
+
+            {% if session.get('user_id') %}
+                <a href="/orders">My Orders</a>
+                <a href="/logout">Logout</a>
+            {% else %}
+                <a href="/login">Login</a>
+                <a href="/register" class="nav-button">Sign Up</a>
+            {% endif %}
+        </nav>
+    </header>
+
+    <main class="main-content">
+        {% for message in messages %}
+            <div class="notice">{{ message }}</div>
+        {% endfor %}
+
+        {{ content }}
+    </main>
+
+    <footer class="footer">
+        <a href="/" class="logo">LunaWear<span>.</span></a>
+        <p>Discover your style. Wear your confidence.</p>
+        <p class="copyright">© 2026 LunaWear. All rights reserved.</p>
+    </footer>
+
+</body>
+</html>

@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="hy">
+<head>
+ <meta charset="UTF-8">
+ <meta name="viewport" content="width=device-width, initial-scale=1.0">
+ <title>OnlineShop - Խանութ</title>
+ <link rel="stylesheet" href="style.css">
+</head>
+<body>
+ <header class="navbar">
+ <div class="logo"><a href="index.html">OnlineShop</a></div>
+ <button class="burger-btn" onclick="document.querySelector('.nav-links').classList.toggle('open')">☰</button>
+ <nav class="nav-links">
+ <a href="index.html">Գլխավոր</a>
+ <a href="shop.html" class="active">Խանութ</a>
+ <a href="favorites.html">Նախընտրածներ (<span id="sirats-qanak">0</span>)</a>
+ <a href="cart.html">Զամբյուղ (<span id="zambyugh-qanak">0</span>)</a>
+ <a href="login.html">Մուտք</a>
+ </nav>
+ </header>
+
+ <main>
+ <div class="shop-top">
+ <div>
+ <label style="margin-right: 0.5rem; color: #94a3b8;">Ֆիլտրեր:</label>
+ <select id="bajnivtrats" class="cat-select">
+ <option value="all">Բոլոր բաժինները</option>
+ <option value="electronics">Electronics</option>
+ <option value="sweets">Քաղցրավենիք Sweets</option>
+ </select>
+ </div>
+ </div>
+
+ <div id="xanut-apranqner" class="products-grid"></div>
+ </main>
+
+ <div id="lracucich-patuhan" class="modal hidden"></div>
+ <div id="tsanucum" class="toast"></div>
+
+ <script src="data.js"></script>
+ <script src="api.js"></script>
+ <script src="store.js"></script>
+ <script src="app.js"></script>
+ <script>
+ let bolorapranqner = [];
+
+ 
+ async function skselxanut() {
+ try {
+ bolorapranqner = await apranqneristatsum();
+ 
+ const hxumiparametrer = new URLSearchParams(window.location.search);
+ const bajinparametr = hxumiparametrer.get('category');
+ if(bajinparametr) {
+ document.getElementById("bajnivtrats").value = bajinparametr;
+ }
+
+ 
+ filterapranqner();
+ } catch(sxal) { 
+ console.error(sxal); 
+ }
+ }
+
+ 
+ function filterapranqner() {
+ const intrvadbajin = document.getElementById("bajnivtrats").value;
+
+ let ztvats = bolorapranqner.filter(apranq => {
+ return (intrvadbajin === "all") || (apranq.category === intrvadbajin);
+ });
+
+ nkartsncel(ztvats, "xanut-apranqner");
+ }
+
+ document.getElementById("bajnivtrats").addEventListener("change", filterapranqner);
+
+ skselxanut();
+ </script>
+</body>
+</html>

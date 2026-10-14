@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="hy">
+<head>
+ <meta charset="UTF-8">
+ <meta name="viewport" content="width=device-width, initial-scale=1.0">
+ <title>OnlineShop - Գլխավոր</title>
+ <link rel="stylesheet" href="style.css">
+</head>
+<body>
+ <header class="navbar">
+ <div class="logo"><a href="index.html">OnlineShop</a></div>
+ <button class="burger-btn" onclick="document.querySelector('.nav-links').classList.toggle('open')">☰</button>
+ <nav class="nav-links">
+ <a href="index.html" class="active">Գլխավոր</a>
+ <a href="shop.html">Խանութ</a>
+ <a href="favorites.html">Նախընտրածներ (<span id="sirats-qanak">0</span>)</a>
+ <a href="cart.html">Զամբյուղ (<span id="zambyugh-qanak">0</span>)</a>
+ <a href="login.html">Մուտք</a>
+ </nav>
+ </header>
+
+ <main>
+ <section class="hero">
+ <h1>Բարի գալուստ TechShop</h1>
+ <p>Գտեք լավագույն ապրանքները ամենամատչելի գներով</p>
+ </section>
+
+ <section class="categories-section">
+ <h2 class="categories-title">Բաժիններ</h2>
+ <div class="categories-box">
+ <a href="shop.html?category=electronics" class="cat-card">
+ <span>💻 Electronics</span>
+ </a>
+ <a href="shop.html?category=sweets" class="cat-card">
+ <span>🍬 Քաղցրավենիք</span>
+ </a>
+ </div>
+ </section>
+ </main>
+
+ <div id="lracucich-patuhan" class="modal hidden"></div>
+ <div id="tsanucum" class="toast"></div>
+
+ <script src="data.js"></script>
+ <script src="api.js"></script>
+ <script src="store.js"></script>
+ <script src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="hy">
+<head>
+ <meta charset="UTF-8">
+ <meta name="viewport" content="width=device-width, initial-scale=1.0">
+ <title>OnlineShop+ - Մուտք</title>
+ <link rel="stylesheet" href="style.css">
+</head>
+<body>
+ <header class="navbar">
+ <div class="logo"><a href="index.html">OnlineShop</a></div>
+ <nav class="nav-links">
+ <a href="index.html">Գլխավոր</a>
+ <a href="shop.html">Խանութ</a>
+ <a href="favorites.html">Նախընտրածներ (<span id="sirats-qanak">0</span>)</a>
+ <a href="cart.html">Զամբյուղ (<span id="zambyugh-qanak">0</span>)</a>
+ <a href="login.html" class="active">Մուտք</a>
+ </nav>
+ </header>
+
+ <main class="auth-page">
+ <div class="auth-card">
+ <div class="auth-tabs">
+ <button id="amutq-knopka" class="active" onclick="poxelrejim('amutq')">Մուտք</button>
+ <button id="grancum-knopka" onclick="poxelrejim('grancum')">Գրանցում</button>
+ </div>
+
+ <form id="amutq-forma" class="auth-form" onsubmit="kataramutq(event)">
+ <div id="anun-xumb" class="form-group hidden">
+ <label>Անուն</label>
+ <input type="text" id="muqt-anun" placeholder="Անուն">
+ </div>
+ <div class="form-group">
+ <label>Էլ․ Փոստ</label>
+ <input type="email" id="muqt-elpost" placeholder="example@mail.com" required>
+ </div>
+ <div id="heraxos-xumb" class="form-group hidden">
+ <label>Հեռախոսահամար</label>
+ <input type="text" id="muqt-heraxos" placeholder="+374XXXXXXXX">
+ </div>
+ <div class="form-group">
+ <label>Գաղտնաբառ</label>
+ <input type="password" id="muqt-parol" placeholder="••••••••" required>
+ </div>
+ <button type="submit" class="auth-submit-btn" id="amutq-knopka-hastat">Մուտք Գործել</button>
+ </form>
+ </div>
+ </main>
+
+ <div id="tsanucum" class="toast"></div>
+
+ <script src="data.js"></script>
+ <script src="api.js"></script>
+ <script src="store.js"></script>
+ <script src="app.js"></script>
+ <script>
+ let rejim = 'amutq';
+
+ function poxelrejim(norrejim) {
+ rejim = norrejim;
+ document.getElementById('amutq-knopka').classList.toggle('active', norrejim === 'amutq');
+ document.getElementById('grancum-knopka').classList.toggle('active', norrejim === 'grancum');
+ document.getElementById('anun-xumb').classList.toggle('hidden', norrejim === 'amutq');
+ document.getElementById('heraxos-xumb').classList.toggle('hidden', norrejim === 'amutq');
+ document.getElementById('amutq-knopka-hastat').textContent = norrejim === 'amutq' ? 'Մուտք Գործել' : 'Գրանցվել';
+ }
+
+async function kataramutq(ipardzutyun) {
+     ipardzutyun.preventDefault();
+     const elpost = document.getElementById('muqt-elpost').value;
+     const parol = document.getElementById('muqt-parol').value;
+     const anun = document.getElementById('muqt-anun').value || 'User';
+     const heraxos = document.getElementById('muqt-heraxos').value || '';
+
+     const elpostkanon = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+     const parolkanon = /^.{6,}$/;
+
+     if (!elpostkanon.test(elpost)) {
+         cuygtsanucum("Անվավեր էլ․ փոստ");
+         return;
+     }
+     if (!parolkanon.test(parol)) {
+         cuygtsanucum("Գաղտնաբառը պետք է լինի մին 6 նիշ");
+         return;
+     }
+
+     try {
+         const isRegister = (rejim === 'grancum');
+         const ogtater = await ogtaterimutq(elpost, parol, anun, heraxos, isRegister);
+         localStorage.setItem('ogtater', JSON.stringify(ogtater));
+         cuygtsanucum(isRegister ? "Հաջողությամբ գրանցվեցիք" : "Հաջողությամբ մուտք գործեցիք");
+         setTimeout(() => location.href = 'index.html', 1000);
+     } catch (sxal) {
+         cuygtsanucum(sxal.message);
+     }
+ }
+ </script>
+</body>
+</html>

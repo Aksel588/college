@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% block title %}Create an account | DreamTrip{% endblock %}
+{% block content %}
+<section class="auth-section">
+    <div class="auth-image auth-image-register">
+        <div class="auth-image-copy"><p class="eyebrow eyebrow-light">THE WORLD IS YOURS</p><h2>There are places<br>you haven't <em>dreamed of yet.</em></h2></div>
+    </div>
+    <div class="auth-form-side">
+        <form class="auth-form" method="POST" action="{{ url_for('register') }}">
+            <p class="eyebrow">YOUR JOURNEY STARTS HERE</p>
+            <h1>Create your <em>account.</em></h1>
+            <p class="auth-subtitle">Join DreamTrip and start planning your next escape.</p>
+            <label for="full_name">Full name</label>
+            <input id="full_name" name="full_name" type="text" autocomplete="name" maxlength="100" placeholder="Your full name" required>
+            <label for="email">Email address</label>
+            <input id="email" name="email" type="email" autocomplete="email" maxlength="150" placeholder="you@example.com" required>
+            <label for="password">Password</label>
+            <input id="password" name="password" type="password" autocomplete="new-password" minlength="8" placeholder="At least 8 characters" required>
+            <button class="button button-dark button-full" type="submit">Create account <span>↗</span></button>
+            <p class="auth-switch">Already have an account? <a href="{{ url_for('login') }}">Log in</a></p>
+        </form>
+    </div>
+</section>
+{% endblock %}

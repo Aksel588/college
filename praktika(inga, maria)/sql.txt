@@ -1,0 +1,40 @@
+
+CREATE DATABASE perfumery_db;
+
+USE perfumery_db;
+
+CREATE TABLE categories (
+    category_id INT PRIMARY KEY AUTO_INCREMENT,
+    category_name VARCHAR(50) NOT NULL
+);
+
+CREATE TABLE perfumes (
+    perfume_id INT PRIMARY KEY AUTO_INCREMENT,
+    perfume_name VARCHAR(100) NOT NULL,
+    brand VARCHAR(100) NOT NULL,
+    price DECIMAL(10,2),
+    category_id INT,
+    FOREIGN KEY (category_id)
+        REFERENCES categories(category_id)
+);
+
+INSERT INTO categories (category_name)
+VALUES
+('Floral'),
+('Woody'),
+('Fresh'),
+('Oriental');
+
+INSERT INTO perfumes
+    (perfume_name, brand, price, category_id)
+VALUES
+('Bloom', 'Gucci', 85.00, 1),
+('Santal 33', 'Le Labo', 145.00, 2),
+('Light Blue', 'Dolce & Gabbana', 75.00, 3),
+('Black Opium', 'Yves Saint Laurent', 110.00, 4),
+('Miss Dior', 'Dior', 120.00, 1),
+('Sauvage', 'Dior', 105.00, 3);
+
+SELECT * FROM categories;
+
+SELECT * FROM perfumes;

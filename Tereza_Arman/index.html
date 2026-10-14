@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="hy">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Style House</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sql.js/1.10.3/sql-wasm.js"></script>
+    <script src="script.js" defer></script>
+</head>
+<body>
+    <div class="top-bar">ԱՆՎՃԱՐ ԱՌԱՔՈՒՄ՝ 20000 դրամից բարձր գնումների դեպքում</div>
+    <header>
+        <h1>STYLE HOUSE</h1>
+        <input type="text" id="search" placeholder="Որոնել ապրանք...">
+        <div class="header-buttons">
+            <button id="favoritesBtn">♡ Սիրվածներ <span id="favoritesCount">0</span></button>
+            <button id="cartBtn">🛒 Զամբյուղ <span id="cartCount">0</span></button>
+        </div>
+    </header>
+    <nav>
+        <a href="#home">Գլխավոր</a>
+        <a href="#catalog">Կատալոգ</a>
+        <a href="#about">Մեր մասին</a>
+        <a href="#contact">Կապ</a>
+    </nav>
+    <section class="hero" id="home">
+        <div>
+            <p class="eyebrow">ՆՈՐ ՀԱՎԱՔԱԾՈՒ</p>
+            <h2>Քո ոճը՝<br>քո կանոններով</h2>
+            <p>Գտիր քո սիրելի հագուստը Style House-ում։</p>
+            <a href="#catalog" class="shop-btn">Գնել հիմա</a>
+        </div>
+    </section>
+    <section class="categories">
+        <h2>Մեր բաժինները</h2>
+        <div class="category-list">
+            <button class="category-btn active" data-category="all">Բոլորը</button>
+            <button class="category-btn" data-category="women">Կանացի հագուստ</button>
+            <button class="category-btn" data-category="men">Տղամարդկանց հագուստ</button>
+            <button class="category-btn" data-category="shoes">Կոշիկներ</button>
+            <button class="category-btn" data-category="sportswear">Սպորտային հագուստ</button>
+            <button class="category-btn" data-category="dresses">Երեկոյան զգեստներ</button>
+            <button class="category-btn" data-category="jackets">Բաճկոններ</button>
+        </div>
+    </section>
+    <main id="catalog">
+        <div class="section-heading">
+            <div><p class="eyebrow">STYLE HOUSE COLLECTION</p><h2>Մեր ապրանքները</h2></div>
+            <span id="dbStatus" class="db-status">SQLite բազան բեռնվում է…</span>
+        </div>
+        <div class="filters">
+            <select id="genderFilter">
+                <option value="all">Բոլոր սեռերի համար</option>
+                <option value="women">Կանացի</option>
+                <option value="men">Տղամարդկանց</option>
+            </select>
+            <select id="sort">
+                <option value="default">Դասավորել</option>
+                <option value="low">Գին՝ ցածրից բարձր</option>
+                <option value="high">Գին՝ բարձրից ցածր</option>
+            </select>
+        </div>
+        <div id="products" class="products"></div>
+    </main>
+    <section id="about" class="info-section">
+        <p class="eyebrow">ՄԵՐ ՄԱՍԻՆ</p>
+        <h2>Ոճ, որ խոսում է քո փոխարեն</h2>
+        <p>Style House-ը հագուստի առցանց խանութ է, որտեղ կարող եք գտնել ժամանակակից և գեղեցիկ հագուստ տարբեր ոճերի համար։</p>
+    </section>
+    <section id="contact" class="info-section contact">
+        <p class="eyebrow">ԿԱՊ</p><h2>Կապ մեզ հետ</h2>
+        <p>Էլ․ փոստ՝ stylehouse@example.com</p>
+        <p>Հեռախոս՝ +374 00 000000</p>
+    </section>
+    <footer><p>© 2026 Style House | Բոլոր իրավունքները պաշտպանված են</p><small>Products are loaded from a SQLite database in your browser.</small></footer>
+
+    <section class="sql-console-section" id="sql-console">
+      <div class="sql-console">
+        <div class="sql-console-heading"><span class="sql-icon">▤</span><div><h2>SQL Database Console</h2><p>Գրիր SQL հարցումներ և դիտիր Style House-ի նույն products տվյալների բազան։</p></div></div>
+        <div id="sqlStatus" class="sql-status">SQLite բազան բեռնվում է…</div>
+        <div class="sql-toolbar">
+          <button class="sql-example-btn" data-sql="SELECT * FROM products;">Բոլոր ապրանքները</button>
+          <button class="sql-example-btn secondary" data-sql="SELECT name, price FROM products ORDER BY price ASC;">Գները՝ ցածրից բարձր</button>
+          <button class="sql-example-btn secondary" data-sql="SELECT category, COUNT(*) AS count FROM products GROUP BY category;">Ապրանքներն ըստ բաժնի</button>
+          <button class="sql-example-btn secondary" data-sql="SELECT * FROM products WHERE gender = 'women';">Կանացի ապրանքներ</button>
+          <button class="sql-example-btn secondary" data-sql="SELECT * FROM sqlite_master WHERE type = 'table';">Աղյուսակներ</button>
+        </div>
+        <label class="sql-label" for="sqlQuery">SQL հարցում</label>
+        <textarea id="sqlQuery" spellcheck="false">SELECT * FROM products;</textarea>
+        <div class="sql-run-row"><button id="runSqlBtn" class="run-sql-btn" disabled>▶ Run SQL</button><button id="clearSqlBtn" class="sql-example-btn secondary">Մաքրել արդյունքը</button><button id="resetSqlBtn" class="sql-example-btn secondary">Վերականգնել ապրանքները</button></div>
+        <div id="sqlMessage" class="sql-message">Պատրաստվում է տվյալների բազան…</div>
+        <div id="sqlResults" class="sql-results"><div class="sql-empty">Արդյունքներն այստեղ կերևան։</div></div>
+      </div>
+    </section>
+
+    <div id="overlay" class="overlay"></div>
+    <aside id="cartPanel" class="side-panel">
+        <button class="close-btn" id="closeCart">✕</button><h2>Իմ զամբյուղը</h2>
+        <div id="cartItems"></div><h3 id="cartTotal">Ընդհանուր՝ 0 դրամ</h3>
+        <button id="checkoutBtn" class="main-btn">Պատվիրել</button>
+    </aside>
+    <aside id="favoritesPanel" class="side-panel">
+        <button class="close-btn" id="closeFavorites">✕</button><h2>Սիրված ապրանքներ</h2>
+        <div id="favoriteItems"></div>
+    </aside>
+    <div id="toast" class="toast"></div>
+</body>
+</html>

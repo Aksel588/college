@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% block title %}My trips | DreamTrip{% endblock %}
+{% block content %}
+<section class="page-banner bookings-banner">
+    <div class="container page-banner-content">
+        <p class="eyebrow">YOUR TRAVEL JOURNAL</p>
+        <h1>Your journeys, <em>in the making.</em></h1>
+        <p>All your DreamTrip requests, gathered in one place.</p>
+    </div>
+</section>
+<section class="section container">
+    {% if bookings %}
+    <div class="booking-list">
+        {% for booking in bookings %}
+        <article class="booking-card">
+            <img src="{{ booking.image_url }}" alt="{{ booking.destination_name }}" loading="lazy">
+            <div class="booking-card-info">
+                <p class="eyebrow">{{ booking.country }}</p>
+                <h3>{{ booking.destination_name }}</h3>
+                <p>Travel date: <strong>{{ booking.travel_date.strftime('%B %d, %Y') if booking.travel_date.strftime is defined else booking.travel_date }}</strong></p>
+                <p>Travelers: {{ booking.travelers }} · From ${{ "{:,.0f}".format(booking.price) }} per person</p>
+            </div>
+            <span class="status-pill">{{ booking.status }}</span>
+        </article>
+        {% endfor %}
+    </div>
+    {% else %}
+    <div class="empty-state">
+        <span class="empty-icon">✳</span>
+        <p class="eyebrow">A WORLD OF POSSIBILITIES</p>
+        <h2>No trips planned <em>just yet.</em></h2>
+        <p>Your next favorite memory is out there waiting for you.</p>
+        <a class="button button-dark" href="{{ url_for('destinations') }}">Explore destinations ↗</a>
+    </div>
+    {% endif %}
+</section>
+{% endblock %}
